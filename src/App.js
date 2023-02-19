@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useAtom } from "jotai";
+import { useState } from "react";
+import "./App.css";
+import { counterAtom } from "./jotai/atoms";
 
 function App() {
+  const [count, setCount] = useAtom(counterAtom);
+  const [incrementAmount, setIncrementAmount] = useState(2);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>カウント数: {count}</h1>
+      <div>
+        <button onClick={() => setCount(count + 1)}>+1</button>
+        <button onClick={() => setCount(count - 1)}>-1</button>
+      </div>
+      <div>
+        <label style={{ display: "block" }}>
+          1カウントで追加したい数を入力してください
+        </label>
+        <input
+          onChange={(e) => setIncrementAmount(Number(e.target.value))}
+          value={incrementAmount}
+        />
+        <button onClick={() => setCount(count + incrementAmount)}>追加</button>
+      </div>
     </div>
   );
 }
